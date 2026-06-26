@@ -46,6 +46,10 @@ body {
     gap: 20px;
 }
 
+.container > * {
+    min-width: 0; /* Prevents CSS grid blowout */
+}
+
 /* Status Panel */
 .status-panel {
     background: var(--bg-secondary);
@@ -238,6 +242,7 @@ body {
 
 .tabs {
     display: flex;
+    flex-wrap: wrap;
     gap: 8px;
     margin-bottom: 24px;
     border-bottom: 2px solid var(--border-color);
