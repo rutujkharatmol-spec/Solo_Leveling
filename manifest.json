@@ -1,0 +1,16 @@
+{
+  "name": "Solo Leveling - Ojas",
+  "short_name": "Leveling",
+  "description": "Personal leveling system for Ojas.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050810",
+  "theme_color": "#050810",
+  "icons": [
+    {
+      "src": "icon.png",
+      "sizes": "1024x1024",
+      "type": "image/png"
+    }
+  ]
+}

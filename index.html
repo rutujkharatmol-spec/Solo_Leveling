@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#050810">
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" href="icon.png">
+    <title>Happy Birthday Ojas! - Solo Leveling System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <canvas id="vfxCanvas" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999;"></canvas>
+    <div class="birthday-banner">
+        <h1>🎉 Happy Birthday, Ojas! 🎉</h1>
+        <p>Welcome to your personal leveling system. Get ready to level up!</p>
+    </div>
+    <div class="container">
+        <!-- Character Status Panel -->
+        <div class="status-panel">
+            <div class="profile-container">
+                <img id="rankImage" src="images/E-Rank.png" alt="Rank Profile" class="rank-image">
+            </div>
+            <div class="status-header">
+                <h1 class="character-name" id="characterName">Ojas</h1>
+                <div class="rank-badge" id="rankBadge">E-Rank</div>
+            </div>
+            
+            <div class="level-section">
+                <div class="level-info">
+                    <span class="level-label">Level</span>
+                    <span class="level-value" id="levelValue">1</span>
+                </div>
+                <div class="xp-bar-container">
+                    <div class="xp-bar-label">
+                        <span>Experience</span>
+                        <span id="xpText">0 / 100 XP</span>
+                    </div>
+                    <div class="xp-bar">
+                        <div class="xp-bar-fill" id="xpBarFill"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Panel -->
+            <div class="stats-panel">
+                <h2>Status</h2>
+                <div class="stats-grid">
+                    <div class="stat-item">
+                        <div class="stat-header">
+                            <span class="stat-name">Strength</span>
+                            <span class="stat-value" id="statStrength">10</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" id="statStrengthBar" style="width: 10%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-header">
+                            <span class="stat-name">Endurance</span>
+                            <span class="stat-value" id="statEndurance">10</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" id="statEnduranceBar" style="width: 10%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-header">
+                            <span class="stat-name">Intelligence</span>
+                            <span class="stat-value" id="statIntelligence">10</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" id="statIntelligenceBar" style="width: 10%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-header">
+                            <span class="stat-name">Focus</span>
+                            <span class="stat-value" id="statFocus">10</span>
+                        </div>
+                        <div class="stat-bar">
+                            <div class="stat-bar-fill" id="statFocusBar" style="width: 10%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-header">
+                            <span class="stat-name">Skill Points</span>
+                            <span class="stat-value" id="statSkillPoints">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <!-- Navigation Tabs -->
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="log">Log Activity</button>
+                <button class="tab-btn" data-tab="quests">Daily Quests</button>
+                <button class="tab-btn" data-tab="history">Activity History</button>
+                <button class="tab-btn" data-tab="analytics">Analytics</button>
+                <button class="tab-btn" data-tab="shop">Skill Shop</button>
+                <button class="tab-btn" data-tab="achievements">Achievements</button>
+                <button class="tab-btn" data-tab="settings">Settings</button>
+            </div>
+
+            <!-- Log Activity Tab -->
+            <div class="tab-content active" id="tab-log">
+                <div class="activity-form">
+                    <h2>Log New Activity</h2>
+                    <div class="form-group">
+                        <label for="activityType">Activity Type</label>
+                        <select id="activityType">
+                            <option value="study">Study</option>
+                            <option value="exercise">Exercise</option>
+                            <option value="practice">Skill Practice</option>
+                            <option value="work">Work Session</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="activityCategory">Category/Subject</label>
+                        <input type="text" id="activityCategory" placeholder="e.g., Mathematics, Cardio, Programming">
+                    </div>
+                    <div class="form-group">
+                        <label>Duration</label>
+                        <div style="display: flex; gap: 10px;">
+                            <input type="number" id="activityDurationHours" min="0" value="0" placeholder="Hours" style="flex: 1;">
+                            <input type="number" id="activityDurationMinutes" min="0" max="59" value="30" placeholder="Minutes" style="flex: 1;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="activityDifficulty">Difficulty</label>
+                        <select id="activityDifficulty">
+                            <option value="1">Easy</option>
+                            <option value="1.5" selected>Normal</option>
+                            <option value="2">Hard</option>
+                            <option value="2.5">Very Hard</option>
+                            <option value="3">Extreme</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" id="logActivityBtn">Log Activity</button>
+                </div>
+            </div>
+
+            <!-- Daily Quests Tab -->
+            <div class="tab-content" id="tab-quests">
+                <div class="quests-container">
+                    <div class="quests-header">
+                        <h2>Daily Preparation</h2>
+                        <div class="quest-timer" id="questTimer">Resets at midnight</div>
+                    </div>
+                    <div class="quests-list" id="questsList">
+                        <!-- Quests will be dynamically injected here -->
+                    </div>
+                    <button class="btn-primary" id="claimQuestsBtn" disabled>Claim Penalty Zone Avoided (+100 XP)</button>
+                </div>
+            </div>
+
+            <!-- Activity History Tab -->
+            <div class="tab-content" id="tab-history">
+                <div class="history-container">
+                    <h2>Activity History</h2>
+                    <div class="history-filters">
+                        <select id="historyFilter">
+                            <option value="all">All Activities</option>
+                            <option value="study">Study</option>
+                            <option value="exercise">Exercise</option>
+                            <option value="practice">Skill Practice</option>
+                            <option value="work">Work Session</option>
+                        </select>
+                    </div>
+                    <div class="history-list" id="historyList"></div>
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="tab-content" id="tab-analytics">
+                <div class="analytics-container">
+                    <h2>Growth Analytics</h2>
+                    <div class="analytics-grid">
+                        <div class="analytics-card">
+                            <h3>Time Investment</h3>
+                            <div class="time-stats">
+                                <div class="time-stat">
+                                    <span class="time-label">Today</span>
+                                    <span class="time-value" id="timeToday">0h 0m</span>
+                                </div>
+                                <div class="time-stat">
+                                    <span class="time-label">This Week</span>
+                                    <span class="time-value" id="timeWeek">0h 0m</span>
+                                </div>
+                                <div class="time-stat">
+                                    <span class="time-label">This Month</span>
+                                    <span class="time-value" id="timeMonth">0h 0m</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="analytics-card">
+                            <h3>Stat Growth</h3>
+                            <div class="stat-growth" id="statGrowth"></div>
+                        </div>
+                        <div class="analytics-card">
+                            <h3>Strongest Areas</h3>
+                            <div class="strongest-areas" id="strongestAreas"></div>
+                        </div>
+                        <div class="analytics-card">
+                            <h3>Skill Hours</h3>
+                            <div class="skill-hours" id="skillHours"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Skill Shop Tab -->
+            <div class="tab-content" id="tab-shop">
+                <div class="shop-container">
+                    <div class="shop-header">
+                        <h2>Skill Point Shop</h2>
+                        <div class="shop-header-right">
+                            <button class="btn-secondary" id="openRewardBoxBtnHeader">🎁 Open Reward Box</button>
+                            <div class="skill-points-display">
+                                <span class="skill-points-label">Available Skill Points:</span>
+                                <span class="skill-points-value" id="shopSkillPoints">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-categories">
+                        <button class="shop-category-btn active" data-category="boosts">Stat Boosts</button>
+                        <button class="shop-category-btn" data-category="features">Advanced Features</button>
+                        <button class="shop-category-btn" data-category="quotes">Motivational Quotes</button>
+                        <button class="shop-category-btn" data-category="customization">Customization</button>
+                    </div>
+                    <div class="shop-items-grid" id="shopItemsGrid"></div>
+                </div>
+            </div>
+
+            <!-- Achievements Tab -->
+            <div class="tab-content" id="tab-achievements">
+                <div class="achievements-container">
+                    <h2>Achievements</h2>
+                    <div class="achievements-grid" id="achievementsGrid"></div>
+                </div>
+            </div>
+
+            <!-- Settings Tab -->
+            <div class="tab-content" id="tab-settings">
+                <div class="settings-container">
+                    <h2>Character Settings</h2>
+                    <div class="form-group">
+                        <label for="characterNameInput">Character Name</label>
+                        <input type="text" id="characterNameInput" placeholder="Enter your name">
+                    </div>
+                    <button class="btn-primary" id="saveNameBtn">Save Name</button>
+                    <div class="settings-section">
+                        <h3>Data Management</h3>
+                        <button class="btn-secondary" id="exportDataBtn">Export Data</button>
+                        <button class="btn-secondary" id="importDataBtn">Import Data</button>
+                        <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Level Up Notification -->
+        <div class="level-up-notification" id="levelUpNotification">
+            <div class="level-up-content">
+                <h2>LEVEL UP!</h2>
+                <p>You reached Level <span id="levelUpLevel"></span>!</p>
+                <div class="level-up-rewards" id="levelUpRewards"></div>
+            </div>
+        </div>
+
+        <!-- Achievement Notification -->
+        <div class="achievement-notification" id="achievementNotification">
+            <div class="achievement-content">
+                <h3>Achievement Unlocked!</h3>
+                <p id="achievementName"></p>
+            </div>
+        </div>
+
+        <!-- Reward Box Modal -->
+        <div class="reward-box-modal" id="rewardBoxModal">
+            <div class="reward-box-content">
+                <div class="reward-box-header">
+                    <h2>🎁 Reward Box</h2>
+                    <button class="close-reward-box" id="closeRewardBox">&times;</button>
+                </div>
+                <div class="reward-box-animation">
+                    <div class="reward-box" id="rewardBox">
+                        <div class="reward-box-lid">📦</div>
+                    </div>
+                </div>
+                <div class="reward-box-reveal" id="rewardBoxReveal">
+                    <div class="quote-icon">💬</div>
+                    <div class="quote-text" id="rewardQuoteText"></div>
+                    <div class="quote-author" id="rewardQuoteAuthor"></div>
+                </div>
+                <button class="btn-primary" id="openRewardBoxBtn" style="display: none;">Open Reward Box</button>
+            </div>
+        </div>
+
+        <!-- Math Quiz Modal -->
+        <div class="reward-box-modal" id="mathQuizModal">
+            <div class="reward-box-content">
+                <div class="reward-box-header">
+                    <h2>🧮 Math Quiz</h2>
+                    <button class="close-reward-box" id="closeMathQuiz">&times;</button>
+                </div>
+                <div class="quiz-content" style="text-align: center; padding: 20px 0;">
+                    <h3 id="quizProgress" style="color: var(--text-secondary); margin-bottom: 5px;">Question 1 / 5</h3>
+                    <p style="color: #ef4444; font-size: 14px; margin-bottom: 20px; font-weight: bold;">(Solve in mind only!)</p>
+                    <div id="quizQuestion" style="font-size: 32px; font-weight: bold; margin-bottom: 30px; letter-spacing: 2px;"></div>
+                    <div id="quizOptions" style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px;">
+                        <button class="btn-secondary quiz-option" data-index="0" style="font-size: 20px; padding: 15px;"></button>
+                        <button class="btn-secondary quiz-option" data-index="1" style="font-size: 20px; padding: 15px;"></button>
+                        <button class="btn-secondary quiz-option" data-index="2" style="font-size: 20px; padding: 15px;"></button>
+                        <button class="btn-secondary quiz-option" data-index="3" style="font-size: 20px; padding: 15px;"></button>
+                    </div>
+                    <div id="quizFeedback" style="margin-top: 15px; font-weight: bold; font-size: 18px; min-height: 27px;"></div>
+                </div>
+            </div>
+        </div>
+        <!-- Tutorial Modal -->
+        <div class="reward-box-modal" id="tutorialModal" style="z-index: 2000;">
+            <div class="reward-box-content" style="max-width: 500px; text-align: center; padding: 30px;">
+                <div class="reward-box-header" style="justify-content: center; margin-bottom: 20px;">
+                    <h2 id="tutorialTitle" style="color: var(--accent-blue); letter-spacing: 2px; text-transform: uppercase;">System Message</h2>
+                </div>
+                <div class="quiz-content">
+                    <p id="tutorialText" style="font-size: 18px; line-height: 1.6; color: var(--text-secondary); margin-bottom: 30px; min-height: 100px;"></p>
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <span id="tutorialProgress" style="color: #666; font-size: 14px; font-weight: bold;">1 / 6</span>
+                        <button class="btn-primary" id="tutorialNextBtn">Next</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').then(registration => {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, err => {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+
