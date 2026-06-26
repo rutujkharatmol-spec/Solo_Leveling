@@ -1066,7 +1066,38 @@ body {
         width: 100%;
         min-height: 48px; /* Touch target */
         margin-bottom: 8px;
-        margin-right: 0;
+    }
+    
+    .quest-item {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+    
+    .quest-item .btn-primary,
+    .quest-item .btn-secondary {
+        margin-bottom: 0;
+    }
+    
+    /* Fix Quiz Layout on mobile */
+    #quizOptions {
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+    
+    .quiz-option {
+        margin-bottom: 0 !important;
+        padding: 10px !important;
+        font-size: 16px !important;
+    }
+    
+    #quizQuestion {
+        font-size: 24px !important;
+    }
+    
+    /* Fix Time Inputs Layout on mobile */
+    #activityHours, #activityMinutes {
+        margin-bottom: 0 !important;
     }
     
     .shop-header-right {
@@ -1084,7 +1115,16 @@ body {
     }
     
     .level-up-content h2 {
-        font-size: 32px;
+        font-size: 28px;
+    }
+    
+    .character-name {
+        font-size: 24px;
+    }
+    
+    .rank-image {
+        width: 150px;
+        max-height: 200px;
     }
 }
 

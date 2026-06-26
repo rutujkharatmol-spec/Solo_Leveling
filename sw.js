@@ -1,4 +1,4 @@
-const CACHE_NAME = 'solo-leveling-v11';
+const CACHE_NAME = 'solo-leveling-v12';
 const urlsToCache = [
     './',
     './index.html',
